@@ -4,16 +4,23 @@ import { v4 as uuidv4 } from 'uuid';
 @Injectable({ providedIn: 'root' })
 export class SessionService {
     private readonly STORAGE_KEY = 'chat_session_id';
-    sessionId = signal<string>(this.getSessionId());
+    sessionId = signal<string>('');
 
-    constructor() { }
+    constructor() {
+        this.initializeSession();
+    }
+
+    private initializeSession() {
+        let id = localStorage.getItem(this.STORAGE_KEY);
+        if (!id) {
+            id = uuidv4();
+            localStorage.setItem(this.STORAGE_KEY, id);
+        }
+        this.sessionId.set(id);
+    }
 
     getSessionId(): string {
-        const id = localStorage.getItem(this.STORAGE_KEY);
-        if (!id) {
-            return this.generateSessionId();
-        }
-        return id;
+        return this.sessionId();
     }
 
     generateSessionId(): string {
