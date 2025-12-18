@@ -1,0 +1,108 @@
+@use '../../../../../styles/variables' as *;
+
+:host {
+    display: block;
+    margin-bottom: $spacing-md;
+}
+
+.message-container {
+    max-width: 85%;
+    padding: $spacing-md;
+    border-radius: $border-radius-lg;
+    position: relative;
+
+    &.user-message {
+        margin-left: auto;
+        background-color: var(--primary);
+        color: white;
+        border-bottom-right-radius: 0;
+
+        .message-header {
+            justify-content: flex-end;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+
+    &.assistant-message {
+        margin-right: auto;
+        background-color: var(--surface);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+        border-bottom-left-radius: 0;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+        .message-header {
+            justify-content: flex-start;
+            color: var(--text-secondary);
+        }
+    }
+}
+
+.message-header {
+    display: flex;
+    gap: $spacing-sm;
+    font-size: 0.75rem;
+    margin-bottom: $spacing-xs;
+    align-items: center;
+}
+
+.role-label {
+    font-weight: 600;
+}
+
+.message-content {
+    line-height: 1.6;
+    font-size: 0.95rem;
+
+    ::ng-deep {
+        p {
+            margin: 0 0 0.5em 0;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        // Markdown specific styles
+        h1,
+        h2,
+        h3 {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+        }
+
+        ul,
+        ol {
+            padding-left: 1.5em;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1em;
+            border-radius: 4px;
+            overflow-x: auto;
+
+            code {
+                background: none;
+                padding: 0;
+            }
+        }
+    }
+}
+
+.message-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: $spacing-sm;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: $spacing-xs;
+}

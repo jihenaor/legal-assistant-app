@@ -1,0 +1,23 @@
+@use 'variables' as *;
+
+@mixin light-theme {
+    --primary: #{$primary};
+    --secondary: #{$secondary};
+    --accent: #{$accent};
+    --background: #{$background};
+    --surface: #{$surface};
+    --text-primary: #{$text-primary};
+    --text-secondary: #{$text-secondary};
+    --border-color: #e2e8f0;
+}
+
+@mixin dark-theme {
+    --primary: #{$primary-dark};
+    --secondary: #94a3b8;
+    --accent: #38bdf8;
+    --background: #{$background-dark};
+    --surface: #{$surface-dark};
+    --text-primary: #{$text-primary-dark};
+    --text-secondary: #cbd5e1;
+    --border-color: #334155;
+}

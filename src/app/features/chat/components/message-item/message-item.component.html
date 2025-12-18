@@ -1,0 +1,21 @@
+<div class="message-container" [ngClass]="{'user-message': message.role === 'user', 'assistant-message': message.role === 'assistant'}">
+  <div class="message-header">
+    <span class="role-label">{{ message.role === 'user' ? 'Tú' : 'Asistente Legal' }}</span>
+    <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+  </div>
+  
+  <div class="message-content">
+    <ng-container *ngIf="message.role === 'assistant'; else plainText">
+      <markdown [data]="message.content"></markdown>
+      
+      <div class="message-actions">
+        <button mat-icon-button [cdkCopyToClipboard]="message.content" (cdkCopyToClipboardCopied)="onCopy()" matTooltip="Copiar respuesta">
+          <mat-icon>{{ isCopied ? 'check' : 'content_copy' }}</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+    <ng-template #plainText>
+      <p>{{ message.content }}</p>
+    </ng-template>
+  </div>
+</div>

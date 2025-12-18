@@ -1,0 +1,13 @@
+<div class="input-container">
+    <mat-form-field appearance="outline" class="full-width">
+        <!-- <mat-label>Escribe tu consulta legal...</mat-label> -->
+        <textarea matInput [(ngModel)]="messageText" placeholder="Escribe tu consulta legal aquí..."
+            [disabled]="disabled" (keydown)="onKeyDown($event)" rows="1" cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5">
+    </textarea>
+        <button mat-icon-button matSuffix (click)="onSubmit()" [disabled]="!messageText.trim() || disabled"
+            color="primary">
+            <mat-icon>send</mat-icon>
+        </button>
+    </mat-form-field>
+</div>

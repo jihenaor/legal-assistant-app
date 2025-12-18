@@ -1,0 +1,24 @@
+@use '../../../../../styles/variables' as *;
+
+:host {
+    display: block;
+    height: 100vh;
+}
+
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--background);
+}
+
+.chat-main {
+    flex: 1;
+    overflow: hidden; // Scroll handled by message-list
+    position: relative;
+}
+
+.chat-footer {
+    flex-shrink: 0;
+    z-index: 10;
+}

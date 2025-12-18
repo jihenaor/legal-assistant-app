@@ -1,0 +1,34 @@
+@use '@angular/material' as mat;
+@use 'styles/variables' as *;
+@use 'styles/themes' as *;
+
+@include mat.core();
+
+// Define a custom palette if needed, but for now we rely on CSS variables for custom components
+// and standard material themes for material components. 
+// Ideally we would map our colors to a Mat palette but for speed we will style our chat components directly.
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    @include light-theme;
+    background-color: var(--background);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+    @include dark-theme;
+}
+
+// Global utilities
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $spacing-md;
+}

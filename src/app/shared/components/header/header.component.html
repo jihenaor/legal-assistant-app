@@ -1,0 +1,19 @@
+<mat-toolbar color="primary" class="app-header">
+    <div class="logo-area">
+        <mat-icon class="logo-icon">gavel</mat-icon>
+        <span class="logo-text">LegalAI Assistant</span>
+    </div>
+
+    <span class="spacer"></span>
+
+    <div class="actions-area">
+        <button mat-button (click)="newChat.emit()" matTooltip="Iniciar nueva conversación">
+            <mat-icon>add</mat-icon>
+            <span class="hide-mobile">Nueva Conversación</span>
+        </button>
+
+        <button mat-icon-button (click)="toggleTheme()" matTooltip="Cambiar tema">
+            <mat-icon>{{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>

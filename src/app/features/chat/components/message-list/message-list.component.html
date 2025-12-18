@@ -1,0 +1,19 @@
+<div class="chat-viewport" #scrollContainer>
+    <div class="messages-wrapper">
+        <div class="empty-state" *ngIf="messages.length === 0">
+            <div class="icon-wrapper">⚖️</div>
+            <h2>Asistente Legal IA</h2>
+            <p>Bienvenido. Estoy aquí para ayudarte con tus consultas legales.</p>
+        </div>
+
+        <app-message-item *ngFor="let msg of messages" [message]="msg">
+        </app-message-item>
+
+        <div class="loading-indicator" *ngIf="isLoading">
+            <div class="typing-bubble">
+                <span></span><span></span><span></span>
+            </div>
+            <span class="sr-only">Escribiendo...</span>
+        </div>
+    </div>
+</div>

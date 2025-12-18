@@ -1,0 +1,41 @@
+@use '../../../../styles/variables' as *;
+
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: white; // Ensure text is white on primary color
+
+    // If not using 'color="primary"' attribute of mat-toolbar, we'd set bg here
+    // But mat-toolbar uses theme. Since we set $primary in palette, it should work.
+    // However, we need to ensure the toolbar uses our custom colors if not fully mapped.
+    // For now we rely on standard angular material theming. 
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-weight: 500;
+
+    .logo-icon {
+        font-size: 24px;
+    }
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.actions-area {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
+}
+
+.hide-mobile {
+    @media (max-width: 600px) {
+        display: none;
+    }
+}
