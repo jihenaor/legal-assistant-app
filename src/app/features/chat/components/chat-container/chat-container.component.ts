@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../../../core/services/chat.service';
 import { SessionService } from '../../../../core/services/session.service';
@@ -16,13 +16,22 @@ import { v4 as uuidv4 } from 'uuid';
     templateUrl: './chat-container.component.html',
     styleUrls: ['./chat-container.component.scss']
 })
-export class ChatContainerComponent {
+export class ChatContainerComponent implements OnInit {
     private chatService = inject(ChatService);
     private sessionService = inject(SessionService);
 
     messages = signal<Message[]>([]);
     isLoading = signal<boolean>(false);
     sidebarCollapsed = signal<boolean>(false);
+
+    private readonly MOBILE_BREAKPOINT = 768;
+
+    ngOnInit() {
+        // Colapsar sidebar automáticamente en móvil
+        if (window.innerWidth < this.MOBILE_BREAKPOINT) {
+            this.sidebarCollapsed.set(true);
+        }
+    }
 
     handleSendMessage(text: string) {
         // Add user message
