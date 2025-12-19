@@ -1,28 +1,30 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-chat-input',
     standalone: true,
-    imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, FormsModule],
     templateUrl: './chat-input.component.html',
     styleUrls: ['./chat-input.component.scss']
 })
-export class ChatInputComponent {
+export class ChatInputComponent implements AfterViewInit {
     @Input() disabled = false;
     @Output() send = new EventEmitter<string>();
+    @ViewChild('textarea') textareaRef!: ElementRef<HTMLTextAreaElement>;
 
     messageText = '';
+
+    ngAfterViewInit() {
+        this.adjustTextareaHeight();
+    }
 
     onSubmit() {
         if (this.messageText.trim() && !this.disabled) {
             this.send.emit(this.messageText.trim());
             this.messageText = '';
+            setTimeout(() => this.adjustTextareaHeight(), 0);
         }
     }
 
@@ -31,6 +33,18 @@ export class ChatInputComponent {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             this.onSubmit();
+        }
+    }
+
+    onInput() {
+        this.adjustTextareaHeight();
+    }
+
+    private adjustTextareaHeight() {
+        if (this.textareaRef) {
+            const textarea = this.textareaRef.nativeElement;
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
         }
     }
 }

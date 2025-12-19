@@ -1,13 +1,15 @@
 <div class="app-layout">
-    <app-header (newChat)="handleNewChat()"></app-header>
+    <app-sidebar (newChat)="handleNewChat()"></app-sidebar>
 
-    <main class="chat-main">
-        <app-message-list [messages]="messages()" [isLoading]="isLoading()">
-        </app-message-list>
-    </main>
+    <div class="chat-area">
+        <main class="chat-main">
+            <app-message-list [messages]="messages()" [isLoading]="isLoading()">
+            </app-message-list>
+        </main>
 
-    <footer class="chat-footer">
-        <app-chat-input [disabled]="isLoading()" (send)="handleSendMessage($event)">
-        </app-chat-input>
-    </footer>
+        <footer class="chat-footer">
+            <app-chat-input [disabled]="isLoading()" (send)="handleSendMessage($event)">
+            </app-chat-input>
+        </footer>
+    </div>
 </div>

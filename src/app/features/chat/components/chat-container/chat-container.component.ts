@@ -6,13 +6,13 @@ import { Message } from '../../../../core/models/message.model';
 import { ChatResponse } from '../../../../core/models/chat-request.model';
 import { MessageListComponent } from '../message-list/message-list.component';
 import { ChatInputComponent } from '../chat-input/chat-input.component';
-import { HeaderComponent } from '../../../../shared/components/header/header.component';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar.component';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
     selector: 'app-chat-container',
     standalone: true,
-    imports: [CommonModule, MessageListComponent, ChatInputComponent, HeaderComponent],
+    imports: [CommonModule, MessageListComponent, ChatInputComponent, SidebarComponent],
     templateUrl: './chat-container.component.html',
     styleUrls: ['./chat-container.component.scss']
 })

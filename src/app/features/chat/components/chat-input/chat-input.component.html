@@ -1,13 +1,18 @@
 <div class="input-container">
-    <mat-form-field appearance="outline" class="full-width">
-        <!-- <mat-label>Escribe tu consulta legal...</mat-label> -->
-        <textarea matInput [(ngModel)]="messageText" placeholder="Escribe tu consulta legal aquí..."
-            [disabled]="disabled" (keydown)="onKeyDown($event)" rows="1" cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5">
-    </textarea>
-        <button mat-icon-button matSuffix (click)="onSubmit()" [disabled]="!messageText.trim() || disabled"
-            color="primary">
-            <mat-icon>send</mat-icon>
+    <div class="input-wrapper">
+        <textarea #textarea [(ngModel)]="messageText" placeholder="Escribe tu consulta legal aquí..."
+            [disabled]="disabled" (keydown)="onKeyDown($event)" (input)="onInput()" rows="1"
+            class="chat-textarea"></textarea>
+
+        <button class="send-button" (click)="onSubmit()" [disabled]="!messageText.trim() || disabled"
+            [class.active]="messageText.trim()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
         </button>
-    </mat-form-field>
+    </div>
+    <div class="input-hint">
+        <span>Presiona <kbd>Shift + Enter</kbd> para nueva línea, <kbd>Enter</kbd> para enviar</span>
+    </div>
 </div>

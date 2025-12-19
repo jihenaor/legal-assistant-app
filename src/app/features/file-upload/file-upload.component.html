@@ -1,0 +1,86 @@
+<div class="app-layout">
+    <app-sidebar></app-sidebar>
+
+    <div class="upload-area">
+        <app-page-header title="Cargar Documentos al RAG" (back)="goBack()"></app-page-header>
+
+        <div class="upload-container">
+            <div class="upload-intro">
+                <p>Sube archivos PDF o ZIP para alimentar la base de conocimiento</p>
+            </div>
+
+            <div class="drop-zone" [class.dragging]="isDragging()" (dragover)="onDragOver($event)"
+                (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="fileInput.click()">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+
+                <h3>Arrastra archivos aquí</h3>
+                <p>o haz clic para seleccionar</p>
+                <span class="file-types">PDF o ZIP (máx. 50MB)</span>
+
+                <input #fileInput type="file" multiple accept=".pdf,.zip" (change)="onFileSelected($event)"
+                    style="display: none;">
+            </div>
+
+            <div class="files-list" *ngIf="files().length > 0">
+                <h3>Archivos seleccionados ({{ files().length }})</h3>
+
+                <div class="file-item" *ngFor="let uploadFile of files(); let i = index">
+                    <div class="file-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                    </div>
+
+                    <div class="file-info">
+                        <div class="file-name">{{ uploadFile.file.name }}</div>
+                        <div class="file-size">{{ formatFileSize(uploadFile.file.size) }}</div>
+
+                        <div class="progress-bar" *ngIf="uploadFile.status === 'uploading'">
+                            <div class="progress-fill" [style.width.%]="uploadFile.progress"></div>
+                        </div>
+
+                        <div class="file-error" *ngIf="uploadFile.status === 'error'">
+                            {{ uploadFile.error }}
+                        </div>
+                    </div>
+
+                    <div class="file-status">
+                        <span class="status-badge" [class]="uploadFile.status">
+                            <ng-container [ngSwitch]="uploadFile.status">
+                                <span *ngSwitchCase="'pending'">Pendiente</span>
+                                <span *ngSwitchCase="'uploading'">{{ uploadFile.progress }}%</span>
+                                <span *ngSwitchCase="'success'">✓ Completado</span>
+                                <span *ngSwitchCase="'error'">✗ Error</span>
+                            </ng-container>
+                        </span>
+                    </div>
+
+                    <button class="remove-btn" (click)="removeFile(i)" *ngIf="uploadFile.status !== 'uploading'">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="upload-actions" *ngIf="files().length > 0">
+                <button class="upload-btn" (click)="uploadFiles()" [disabled]="!hasFilesToUpload || isUploading">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    {{ isUploading ? 'Subiendo...' : 'Subir Archivos' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
