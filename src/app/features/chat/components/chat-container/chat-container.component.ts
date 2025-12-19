@@ -22,6 +22,7 @@ export class ChatContainerComponent {
 
     messages = signal<Message[]>([]);
     isLoading = signal<boolean>(false);
+    sidebarCollapsed = signal<boolean>(false);
 
     handleSendMessage(text: string) {
         // Add user message
@@ -63,5 +64,9 @@ export class ChatContainerComponent {
     handleNewChat() {
         this.sessionService.resetSession();
         this.messages.set([]);
+    }
+
+    handleToggleSidebar() {
+        this.sidebarCollapsed.update(v => !v);
     }
 }

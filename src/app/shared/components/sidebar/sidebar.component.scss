@@ -8,6 +8,32 @@
     border-right: 1px solid #2d2d2d;
     overflow-y: auto;
     flex-shrink: 0;
+    transition: width 0.3s ease;
+
+    &.collapsed {
+        width: 64px;
+
+        .nav-item span,
+        .section-header span,
+        .section-items,
+        .explore-btn span,
+        .new-project-btn span,
+        .sidebar-footer span,
+        .badge {
+            display: none;
+        }
+
+        .nav-item,
+        .explore-btn,
+        .new-project-btn {
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .section-header {
+            justify-content: center;
+        }
+    }
 }
 
 .sidebar-header {
@@ -171,5 +197,19 @@
 
     &:hover {
         background: #3d3d3d;
+    }
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 12px 8px;
+    border-top: 1px solid #2d2d2d;
+
+    .logout-btn {
+        color: #ff6b6b;
+
+        &:hover {
+            background-color: rgba(255, 107, 107, 0.15);
+        }
     }
 }

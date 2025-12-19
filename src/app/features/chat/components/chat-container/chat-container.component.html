@@ -1,5 +1,9 @@
 <div class="app-layout">
-    <app-sidebar (newChat)="handleNewChat()"></app-sidebar>
+    <app-sidebar 
+        [collapsed]="sidebarCollapsed()" 
+        (newChat)="handleNewChat()" 
+        (toggleSidebar)="handleToggleSidebar()">
+    </app-sidebar>
 
     <div class="chat-area">
         <main class="chat-main">

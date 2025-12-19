@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -8,10 +9,12 @@ export const routes: Routes = [
     },
     {
         path: 'chat',
-        loadChildren: () => import('./features/chat/chat.routes').then(m => m.CHAT_ROUTES)
+        loadChildren: () => import('./features/chat/chat.routes').then(m => m.CHAT_ROUTES),
+        canActivate: [authGuard]
     },
     {
         path: 'upload',
-        loadChildren: () => import('./features/file-upload/file-upload.routes').then(m => m.FILE_UPLOAD_ROUTES)
+        loadChildren: () => import('./features/file-upload/file-upload.routes').then(m => m.FILE_UPLOAD_ROUTES),
+        canActivate: [authGuard]
     }
 ];

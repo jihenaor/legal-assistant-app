@@ -38,6 +38,31 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## Deploying to GitHub Pages
+
+This project is configured for deployment to GitHub Pages using `angular-cli-ghpages`.
+
+### Deploy command
+
+```bash
+ng deploy
+```
+
+This command will:
+1. Build the application in production mode
+2. Push the build to the `gh-pages` branch
+3. Publish to: https://jihenaor.github.io/legal-assistant-app/
+
+### First-time setup (already configured)
+
+If you need to reconfigure the deployment:
+
+```bash
+ng add angular-cli-ghpages
+```
+
+The deployment configuration is stored in `angular.json` under `architect.deploy`.
+
 ## Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
