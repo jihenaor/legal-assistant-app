@@ -70,15 +70,19 @@
                     </button>
                 </div>
             </div>
+        </div>
 
-            <div class="upload-actions" *ngIf="files().length > 0">
+        <!-- Barra de acción sticky -->
+        <div class="upload-actions-bar" *ngIf="files().length > 0">
+            <div class="actions-content">
+                <span class="files-count">{{ files().length }} archivo(s) seleccionado(s)</span>
                 <button class="upload-btn" (click)="uploadFiles()" [disabled]="!hasFilesToUpload || isUploading">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="17 8 12 3 7 8"></polyline>
                         <line x1="12" y1="3" x2="12" y2="15"></line>
                     </svg>
-                    {{ isUploading ? 'Subiendo...' : 'Subir Archivos' }}
+                    {{ isUploading ? 'Subiendo...' : 'Subir Archivos al RAG' }}
                 </button>
             </div>
         </div>

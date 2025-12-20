@@ -235,10 +235,30 @@
     }
 }
 
-.upload-actions {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
+// Barra sticky de acciones
+.upload-actions-bar {
+    background: linear-gradient(180deg, transparent 0%, #343541 20%);
+    padding: 20px;
+    border-top: 1px solid #565869;
+    background-color: #343541;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    .actions-content {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .files-count {
+        color: #8e8ea0;
+        font-size: 0.95rem;
+    }
 }
 
 .upload-btn {
