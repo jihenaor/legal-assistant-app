@@ -19,7 +19,7 @@ export interface UploadResponse {
     providedIn: 'root'
 })
 export class FileUploadService {
-    private readonly UPLOAD_URL = 'https://takesolut.app.n8n.cloud/webhook/f485251b-f901-4214-a3b3-2bbe40b98197';
+    private readonly UPLOAD_URL = 'https://takesolut.app.n8n.cloud/webhook/upload-pdf';
 
     constructor(private http: HttpClient) {}
 
