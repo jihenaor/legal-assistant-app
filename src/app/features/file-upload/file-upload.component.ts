@@ -1,16 +1,16 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
-
+import { FileUploadService } from '../../core/services/file-upload.service';
 
 interface UploadFile {
     file: File;
     progress: number;
     status: 'pending' | 'uploading' | 'success' | 'error';
     error?: string;
+    fileId?: string;
 }
 
 @Component({
@@ -27,7 +27,10 @@ export class FileUploadComponent {
     private readonly ALLOWED_TYPES = ['application/pdf', 'application/zip', 'application/x-zip-compressed'];
     private readonly MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(
+        private fileUploadService: FileUploadService,
+        private router: Router
+    ) {}
 
     goBack() {
         this.router.navigate(['/chat']);
@@ -103,9 +106,6 @@ export class FileUploadComponent {
     }
 
     private uploadSingleFile(uploadFile: UploadFile, index: number) {
-        const formData = new FormData();
-        formData.append('file', uploadFile.file);
-
         // Update status to uploading
         this.files.update(current => {
             const updated = [...current];
@@ -113,30 +113,30 @@ export class FileUploadComponent {
             return updated;
         });
 
-        // TODO: Replace with actual endpoint
-        const uploadUrl = '/api/rag/upload';
-
-        this.http.post(uploadUrl, formData, {
-            reportProgress: true,
-            observe: 'events'
-        }).subscribe({
-            next: (event) => {
-                if (event.type === HttpEventType.UploadProgress && event.total) {
-                    const progress = Math.round((100 * event.loaded) / event.total);
+        this.fileUploadService.uploadFile(uploadFile.file).subscribe({
+            next: (uploadProgress) => {
+                if (uploadProgress.status === 'progress') {
                     this.files.update(current => {
                         const updated = [...current];
-                        updated[index] = { ...updated[index], progress };
+                        updated[index] = { ...updated[index], progress: uploadProgress.progress };
                         return updated;
                     });
-                } else if (event.type === HttpEventType.Response) {
+                } else if (uploadProgress.status === 'complete') {
                     this.files.update(current => {
                         const updated = [...current];
-                        updated[index] = { ...updated[index], status: 'success', progress: 100 };
+                        updated[index] = {
+                            ...updated[index],
+                            status: 'success',
+                            progress: 100,
+                            fileId: uploadProgress.fileId
+                        };
                         return updated;
                     });
+                    console.log('Archivo subido exitosamente:', uploadProgress.fileId);
                 }
             },
             error: (error) => {
+                console.error('Error al subir archivo:', error);
                 this.files.update(current => {
                     const updated = [...current];
                     updated[index] = {
